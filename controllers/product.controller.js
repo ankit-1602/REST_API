@@ -37,6 +37,19 @@ productController={
             res.send('Product inserted Successfully')
         })
     },
+    updateProduct: (req,res)=>{
+        Product.findById(req.params.id,(err,data)=>{
+            if(err){
+                res.status(404)
+                res.json({error: 'The given id does not exist in the database'})
+            }
+            data.name=req.body.name
+            data.price=req.body.price
+            data.description=req.body.description
+            data.save()
+            res.json(data)
+        })
+    },
     //Delete request to delete a particular product
     deleteProduct:(req,res)=>{
         Product.remove({id:req.params.id},(err,data)=>{
